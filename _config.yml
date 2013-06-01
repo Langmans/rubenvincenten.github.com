@@ -1,5 +1,3 @@
-server: false
-auto: false
 safe: false
 pygments: true
 
