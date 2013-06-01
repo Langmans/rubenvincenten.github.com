@@ -1,0 +1,50 @@
+---
+layout: page
+---
+<div class="content-box">
+	{{ content }}
+</div>
+
+{% if posts %}
+<div class="post-list post-list-assigned">
+	{% for post in posts %}
+		{% include post.html %}
+	{% endfor %}
+</div>
+{% elsif site.categories contains page.category %}
+<div class="post-list post-list-category post-list-{{page.category}}">
+	{% for post in site.categories[page.category] %}
+		{% include post.html %}
+	{% endfor %}
+</div>
+{% elsif paginator %}
+<div class="post-list post-list-paginated">
+	{% for post in paginator.posts %}
+		{% include post.html %}
+	{% endfor %}
+	{% if paginator.total_pages > 1 %}
+		{% include paginator.html %}
+	{% endif %}
+</div>
+{% else %}
+<div class="post-list post-list-all">
+	{% for post in site.posts %}
+		{% include post.html %}
+	{% endfor %}
+</div>
+{% endif %}
+
+<script
+		type="text/javascript"
+		src="http://zor.livefyre.com/wjs/v1.0/javascripts/CommentCount.js">
+</script>
+<script>
+	if(typeof LF == 'undefined') {
+		LF = {};
+	}
+	LF.CommentCount({
+		replacer: function(element, count) {
+			element.innerHTML = count;
+		}
+	})
+</script>

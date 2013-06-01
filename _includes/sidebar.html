@@ -1,0 +1,38 @@
+<aside id="sidebar">
+    <nav class="widget page-list-widget">
+        <header>
+            <hgroup>
+                <h4><i class="icon-page"></i>Pages</h4>
+            </hgroup>
+        </header>
+        <ul>
+            <li>
+                {% if '/' == page.url %}<span class="current">Home</span>
+                {% else %}<a href="/">Home</a>
+                {% endif %}</li>
+            {% for sitepage in site.pages %}
+            {% if sitepage.title and sitepage.type contains 'mainpage' %}
+            <li>
+                {% if sitepage.url == page.url %}<span class="current">{{ page.title }}</span>
+                {% else %}<a href="{{ sitepage.url }}">{{sitepage.title}}</a>
+            {% endif %}</li>
+            {% endif %}
+        {% endfor %}</ul>
+    </nav>
+    <nav class="widget category-list-widget">
+        <header>
+            <hgroup>
+                <h4><a href="/categories/"><i class="icon-th-list"></i>Categories</a></h4>
+            </hgroup>
+        </header>
+        {% include widgets/categoryList.html %}
+    </nav>
+    <nav class="widget tag-cloud-widget large-widget">
+        <header>
+            <hgroup>
+                <h4><a href="/tags/"><i class="icon-tags"></i>Tags</a></h4>
+            </hgroup>
+        </header>
+        {% include widgets/tagCloud.html %}
+    </nav>
+</aside>

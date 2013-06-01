@@ -1,0 +1,44 @@
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+
+
+html {
+    font-size:62.5%;
+}
+
+body {
+    .font-size();
+    font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+img {
+    max-width:100%;
+}
+
+code,
+kbd,
+pre,
+samp {
+
+    font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono',
+                'DejaVu Sans Mono', 'Bitstream Vera Sans Mono',
+                'Courier New', monospace, serif;
+    .font-size(12);
+}
+
+table {
+    max-width:100%;
+    border-collapse:collapse;
+    border-spacing:0;
+    [scope] pre {
+        margin:0;
+    }
+    [scope=col] {
+        vertical-align:bottom;
+    }
+    [scope=row] {
+        text-align:right;
+    }
+}

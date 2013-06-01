@@ -1,0 +1,99 @@
+{% capture ignore %}
+
+    <!-- singles -->
+    {% if post.url == page.url %}
+        {% assign single = true %}
+    {% else %}
+        {% assign single = false %}
+    {% endif %}
+
+    <!-- first page, first post -->
+    {% if paginator and paginator.page == 1 and forloop and forloop.index == 1%}
+        {% assign newest_post = true %}
+    {% else %}
+        {% assign newest_post = false %}
+    {% endif %}
+
+    <!-- last page, last post -->
+    {% if paginator and paginator.page == paginator.total_pages and forloop and forloop.rindex == 0 %}
+        {% assign oldest_post = true %}
+    {% else %}
+        {% assign oldest_post = false %}
+    {% endif %}
+
+    <!-- full -->
+    {% assign full = false %}
+    {% if single and post.excerptonly %}
+        {% assign full = true %}
+    {% elsif single or post.fullpost or post.link or newest_post %}
+        {% assign full = true %}
+    {% endif %}
+
+    <!-- permalink_icon -->
+    {% assign permalink_icon = false %}
+    {% if single %}
+        {% assign permalink_icon = true %}
+    {% endif %}
+
+    <!-- content -->
+    {% if single %}
+        {% capture the_content %}{{ content }}{% endcapture %}
+    {% else %}
+        {% assign the_content = post.content %}
+    {% endif %}
+
+    <!-- short content -->
+    {% assign has_excerpt = true %}
+    {% if post.excerpt %}
+        {% assign short_content = post.excerpt | markdownify %}
+    {% elsif post.description %}
+        {% assign short_content = post.description | markdownify %}
+    {% else %}
+        {% assign has_excerpt = false %}
+        {% assign content_untruncated = the_content | strip_html | strip_newlines %}
+        {% assign short_content = content_untruncated | truncatewords: site.short_words | markdownify %}
+    {% endif %}
+
+{% endcapture %}<article class="post post-{% unless single %}not-{% endunless %}single{% if newest_post %} newest-post{% endif %}{% if oldest_post %} oldest-post{% endif %}{% if post.subtitle %} post-with-subtitle{% endif %}{% if post.link %} post-with-link{% endif %}">
+    <header>
+        <p class="datetime"><time pubdate datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date: '<span class="month-%m">%b</span> <span class="day-%d">%e</span> <span class="year-%Y">%Y</span>' }}</time></p>
+        <hgroup>
+            <h2>
+                {% if post.link contains "://" %}
+                    <a href="{{ post.link }}" class="post-external-link">
+                        <i class="icon-external-link icon-large"></i>
+                        {{ post.title }}<br>
+                        <sup>{{ post.link }}</sup></a>
+                {% elsif post.link %}
+                    <a href="{{ post.link }}" class="post-internal-link">{{ post.title }}<i class="icon-link icon-large"></i></a>
+                {% elsif permalink_icon %}
+                    {{ post.title }} <a href="{{ post.url }}" data-bookmark="{{ post.title }}"><i class="icon-bookmark icon-large" title="Permalink {{ post.title }}"></i></a>
+                {% else %}
+                    <a href="{{ post.url }}">{{ post.title }}</a>
+                {% endif %}
+            </h2>
+            {% if post.subtitle %}<h3>{{ post.subtitle }}</h3>{% endif %}
+        </header>
+    </header>
+    <div class="post-content">
+        {% if full %}
+            {% if has_excerpt %}
+                {{ short_content }}
+                {% if single %}<hr name="more" class="more">{% endif %}
+            {% elsif single %}
+                <a name="more"></a>
+            {% endif %}
+            {{ the_content }}
+        {% else %}
+            {{ short_content }}
+            {% if has_excerpt %}
+                <a href="{{ post.url }}#more"><i class="icon-arrow-right"></i> Read the article<span class="ellipsis">…</span></a>
+            {% else %}
+                <a href="{{ post.url }}#more"><i class="icon-arrow-right"></i> Read more<span class="ellipsis">…</span></a>
+            {% endif %}
+        {% endif %}
+    </div>
+    <footer class="meta">
+        {% include post_meta.html %}
+    </footer>
+</article>

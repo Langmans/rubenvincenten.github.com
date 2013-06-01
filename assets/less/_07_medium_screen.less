@@ -1,0 +1,21 @@
+/** medium screen **/
+
+#page {
+    .page-width(@medium-screen);
+    .highlight pre{
+        display:inline-block;
+        &:hover {
+            position:relative;
+            overflow-x:auto;
+            white-space:pre;
+            word-wrap:normal;
+        }
+    }
+}
+
+#main  {
+    .with-sidebar {
+        #content {.col(3, 4) }
+        #sidebar {.col(1, 4) }
+    }
+}

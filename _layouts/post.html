@@ -1,0 +1,33 @@
+---
+layout: page
+---
+
+{% assign post = page %}
+{% include post.html %}
+
+{% unless post.nocomments %}
+<div id="comments" style="display:none"></div>
+<script
+	type="text/javascript"
+	src="http://zor.livefyre.com/wjs/v3.0/javascripts/livefyre.js"></script>
+<script type="text/javascript">
+(function () {
+	var articleId = fyre.conv.load.makeArticleId("{{ page.time }}{{ page.title }}");
+	console.log(articleId);
+	fyre.conv.load({}, [{
+		el: 'comments',
+		network: "livefyre.com",
+		siteId: "{{ site.livefyre.id }}",
+		articleId: articleId,
+		signed: false,
+		collectionMeta: {
+			articleId: articleId,
+			url: fyre.conv.load.makeCollectionUrl(),
+		}
+	}], function() {
+	});
+	document.getElementById('comments').style.display="block";
+}());
+</script>
+
+{% endunless %}

@@ -1,0 +1,102 @@
+/* ==========================================================================
+   Mixins
+   ========================================================================== */
+
+@import '_dss';
+
+.border-radius(@arg1, @arg2) {
+    .rounded(@arguments);
+}
+
+.border-radius(@arg1) {
+    .rounded(@arg1);
+}
+
+.border-radius() {
+    .rounded();
+}
+
+.page-width(@width) {
+    background-image:url(~"http://placehold.it/@{width}x100&text=@{width}px");
+    padding-top:100px;
+    .wrapper {
+        width:@width * 1px;
+    }
+}
+
+.border-box(){
+    .box-sizing(border-box);
+}
+
+.grid() {
+    .border-box;
+    display:inline-block;
+    padding-left:@gutter/2;
+    padding-right:@gutter/2;
+    vertical-align:top;
+    min-height:1px;
+    height: auto !important;
+    height: 1px;
+    margin-right:-.3em;
+}
+.col(@colnum:1,@cols:12){
+    //.inl-col;
+    @w: (@colnum/@cols)*100;
+    width:~"@{w}%";
+}
+.col-max(@colnum:1, @cols:12){
+    //.inl-col;
+    @w: (@colnum/@cols)*100;
+    max-width:~"@{w}%";
+}
+.push(@colnum:1, @cols:12){
+    margin-left:unit( (@cols/@colnum)*100, '%');
+}
+.pull(@colnum:1, @cols:12){
+    margin-right:unit( (@cols/@colnum)*100, '%');
+}
+.font-size(@sizeValue:14){
+    @remValue: @sizeValue / 10;
+    @pxValue: (@sizeValue);
+    font-size: ~"@{pxValue}px";
+    font-size: ~"@{remValue}rem";
+}
+
+.transition(@transition:all .5s ease-in-out){
+    -webkit-transition:@transition;
+    -moz-transition:@transition;
+    -o-transition:@transition;
+    -ms-transition:@transition;
+    transition:@transition;
+}
+
+.opacity (@opacity: 0.5) {
+    -webkit-opacity:    @opacity;
+    -moz-opacity:       @opacity;
+    opacity:        @opacity;
+}
+
+.transition (@property: all, @duration: 0.2s, @timing: ease-out, @delay: 0) {
+  -webkit-transition: @arguments;
+     -moz-transition: @property @duration @timing ~"@{delay}s";
+      -ms-transition: @arguments;
+       -o-transition: @arguments; /* Opera 10.5+ */
+          transition: @arguments;
+}
+
+.font-face (@fontname, @fontfile, @weight: 'normal', @style: 'normal', @affix: '-webfont', @fontpath: '../fonts') {
+  @path : ~"@{fontpath}/@{fontfile}@{affix}";
+  @font-face {
+
+    font-family: @fontname;
+    font-weight: e(@weight);
+    font-style: e(@style);
+
+    src: url(~"'@{path}.eot'");
+    src: local('☺'),
+    //url(~"'@{path}.eot?#iefix'") format('embedded-opentype'),
+    url(~"'@{path}.woff'") format('woff'),
+    url(~"'@{path}.ttf'") format('truetype'),
+    url(~"'@{path}.svg#@{fontfile}'") format('svg');
+  }
+}

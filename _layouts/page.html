@@ -1,0 +1,26 @@
+---
+layout: base
+---
+<header id="masthead">
+    <div class="wrapper">
+        <figure id="branding">
+            <a href="/">{{ site.title }}</a>
+            <figcaption>
+                <p>{{ site.description }}</p>
+            </figcaption>
+        </figure>
+    </div>
+</header>
+<section id="main">
+    <div class="wrapper{% unless page.no-sidebar %} with-sidebar{% endunless %}">
+        <div id="content" role="main">
+    	   {{ content }}
+        </div>
+        {% unless page.no-sidebar %}
+            {% include sidebar.html %}
+        {% endunless %}
+    </div>
+</section>
+<footer id="footer">
+    <!-- footer -->
+</footer>

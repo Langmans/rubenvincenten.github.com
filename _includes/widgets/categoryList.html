@@ -1,0 +1,6 @@
+<ul>
+	{% for category in site.categories %}
+		<li><a href="/categories.html#{{ category | first | cgi_escape}}">{{ category | first }}</a><sup>({{ category | last | size }})</sup></li>
+	{% endfor %}
+	</ul>
+</nav>

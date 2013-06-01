@@ -1,0 +1,28 @@
+/** small screen **/
+
+#page {
+    .page-width(@small-screen);
+}
+
+#main  {
+    .wrapper {
+        padding:0 @gutter / 2;
+    }
+
+    #content, #sidebar {
+        .grid;
+    }
+
+    .with-sidebar {
+        #content {.col(2, 3) }
+        #sidebar {.col(1, 3) }
+    }
+}
+
+#page {
+    .highlight {
+        pre {
+            border-bottom:@gutter / 4 solid @lightgrey;
+        }
+    }
+}

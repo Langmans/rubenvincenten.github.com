@@ -1,0 +1,28 @@
+{% capture ignore %}
+    <!-- set some vars. -->
+    {% assign min_font_percent = 80 %}
+    {% assign max_font_percent = 160 %}
+    {% assign max_posts_per_tag = 0 %}
+    {% assign sorted_tags = '' %}
+
+    <!-- we need to loop through all the tags to get the number of posts in the tag ( php's array_max equivalent ) -->
+    {% for tag in site.tags %}
+        <!-- meanwhile, append the tag to a string so we can sort the tags later. -->
+        {% capture sorted_tags %}{{ sorted_tags }}{% if forloop.index > 1 %}{||}{% endif %}{{tag|first}}{% endcapture %}
+        {% assign num_posts = tag | last | size %}
+        {% if max_posts_per_tag < num_posts %}
+            {% assign max_posts_per_tag = num_posts %}
+        {% endif %}
+    {% endfor %}
+    <!-- split, then sort. Now we have a tag list(without posts, just names) sorted by alphabet. -->
+    {% assign sorted_tags = sorted_tags | split: '{||}' | sort %}
+
+    <!-- get the difference -->
+    {% assign variable_font_percent = max_font_percent | minus: min_font_percent %}
+    <!-- we now have all variables. -->
+    <!-- unfortunately, liquid does not provide us with a logarythm filter : {{ test | log }}:( -->
+{% endcapture %}{% for tag in sorted_tags %}{% assign tag_posts = site.tags[tag] %}{% assign num_posts = tag_posts | size %}
+    <span class="tag" style="font-size:{{ num_posts | divided_by : max_posts_per_tag | times : variable_font_percent | plus: min_font_percent }}%">
+        <i class="icon-tag"></i><a href="/tags/#{{ tag | cgi_encode }}" title="The tag &quot;{{ tag }}&quot; has {{ num_posts }} posts." data-tag-list="{{ tag | cgi_encode }}">{{ tag | cgi_encode }}</a><sup>({{ num_posts }})</sup>
+    </span>
+{% endfor %}

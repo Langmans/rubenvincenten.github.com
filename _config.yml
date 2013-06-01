@@ -1,0 +1,26 @@
+server: false
+auto: false
+safe: false
+pygments: true
+
+#permalink: /:categories/:title
+paginate: 6
+future: true
+lsi: false
+short_words: 40
+
+title: Ruben Vincenten.nl
+description: "Personal tech / dev blog - blogging about php, jquery and more."
+url: http://rubenvincenten.nl
+author:
+  name: Ruben Vincenten
+  facebook: ruben.vincenten
+  twitter: rubenvincenten
+  linkedin: rubenvincenten
+exclude: ["README.md", "random.txt", "sample_posts"]
+
+#markdown: redcarpet
+markdown: kramdown
+
+livefyre:
+  id: 327442
